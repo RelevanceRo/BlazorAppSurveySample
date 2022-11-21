@@ -1,0 +1,25 @@
+﻿@page "/"
+
+<PageTitle>Index</PageTitle>
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<SurveyPrompt Title="How is Blazor working for you?" />
+
+<div id="surveyElement"></div>
+<div id="surveyResult"></div>
+
+@code{
+    [Inject]
+    public IJSRuntime jsRuntime { get; set; }
+    private IJSObjectReference? module;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender) {
+        
+        if (firstRender) {
+            module = await jsRuntime.InvokeAsync<IJSObjectReference>("import", "./js/survey.js");            
+        }
+    }
+}
